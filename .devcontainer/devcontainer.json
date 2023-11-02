@@ -1,0 +1,68 @@
+{
+    "name": "Workspace",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+        "args": {}
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+    },
+    "remoteEnv": { "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.pythonPath": "/usr/local/bin/python",
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.editor.formatOnSaveMode": "file",
+                "python.languageServer": "Default",
+                "python.linting.enabled": true,
+                "python.linting.pylintEnabled": true,
+                "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+                "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+                "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+                "python.formatting.provider": "black",
+                "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+                "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+                "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+                "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+                "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+                "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-vscode.makefile-tools",
+                "ms-azuretools.vscode-docker",
+                "hashicorp.terraform",
+                "bazelbuild.vscode-bazel",
+                "redhat.vscode-yaml",
+                "golang.go",
+                "eamodio.gitlens"
+            ]
+        }
+    },
+    "mounts": [
+        "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.awn,target=/home/vscode/.awn,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.git-message,target=/home/vscode/.git-message,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.vim,target=/home/vscode/.vim,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/.devcontainer/.env,target=/home/vscode/.env,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/.devcontainer/library-scripts,target=/etc/profile.d,type=bind,consistency=cached"
+    ],
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ],
+    "postAttachCommand": [
+        "bash",
+        "/srv/startup.bash"
+    ],
+    "initializeCommand": [
+        "sh",
+        "-c",
+        "touch ${localEnv:HOME}/.gitconfig ${localEnv:HOME}/.git-message ${localWorkspaceFolder}/.devcontainer/.env && mkdir -p ${localEnv:HOME}/.vim ${localEnv:HOME}/.kube ${localEnv:HOME}/.awn && touch ${localEnv:HOME}/.awn/.env"
+    ]
+}
