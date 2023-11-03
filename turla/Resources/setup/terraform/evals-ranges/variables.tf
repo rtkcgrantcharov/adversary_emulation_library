@@ -312,7 +312,7 @@ variable "carbon_win_desk_os_azure_source_image_sku" {
 variable "carbon_win_desk_os_azure_source_image_version" {
   type        = string
   description = "Version for Windows Server to use (Carbon)"
-  default     = "19044.2006.220909"
+  default     = "19044.2130.221006"
 }
 
 # Snake
